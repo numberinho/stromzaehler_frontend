@@ -3,13 +3,14 @@ import Barchart from '../components/barchart';
 
 export default function Home() {
 
+  const [connected, setConnected] = useState(false)
   const [data, setData] = useState({ Live: 0, Bezug: 0, Abgabe: 0 });
-  const [barchart, setBarchart] = useState([24, 72, 29, 41, 50, 69, 22]);
 
   useEffect(() => {
     var ws = new WebSocket("ws://192.168.178.24:8080/ws")
 
     ws.onopen = () => {
+      setConnected(true)
       console.log("open!")
     };
 
@@ -18,6 +19,7 @@ export default function Home() {
     }
 
     ws.onclose = () => {
+      setConnected(false)
       console.log("closed")
     }
 
@@ -99,7 +101,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col w-11/12 bg-base-100 rounded-xl shadow-lg divide-y-2 p-3">
-        <Barchart data={barchart} live={Math.round(data.Bezug)} />
+        <Barchart live={Math.round(data.Bezug)} />
       </div>
     </div >
   )

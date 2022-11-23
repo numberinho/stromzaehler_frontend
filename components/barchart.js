@@ -1,16 +1,29 @@
+import { data } from 'autoprefixer';
+import { useEffect, useState } from 'react'
+
 export default function Barchart(props) {
 
+    const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+    var now = new Date().getDay()
 
-    if (!props.data || !props.live > 0) {
+    const [barchart, setBarchart] = useState([10, 20, 30, 40, 50, 60]);
+    const [maxValue, setMaxValue] = useState(0);
+
+    // runs every time barchart data changes
+    useEffect(() => {
+        setMaxValue(Math.max(...barchart))
+    }, [])
+
+    // runs every time live data changes
+    useEffect(() => {
+        if (props.live > maxValue) {
+            setMaxValue(props.live)
+        }
+    }, [props.live])
+
+    if (props.live === 0) {
         return <div>...Loading</div>
     }
-
-    props.data[6] = props.live
-
-    const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-
-    var now = new Date().getDay()
-    var maxValue = Math.max(...props.data)
 
     const ProgressBar = (props) => {
 
@@ -24,14 +37,18 @@ export default function Barchart(props) {
 
     return (
         <div>
+            <div className='flex justify-center text-black/60 text-md'>Wochenübersicht</div>
             <div className='flex flex-row w-full justify-evenly'>
-                {props.data.map((value, index) => {
+                {[5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (
                         <div className='flex flex-col-reverse'>
-                            <ProgressBar height={value} index={index} />
+                            <ProgressBar key={index} height={barchart[value]} index={index} />
                         </div>
                     )
                 })}
+                <div className='flex flex-col-reverse'>
+                    <ProgressBar height={props.live} index={0} />
+                </div>
             </div>
         </div>
     )
