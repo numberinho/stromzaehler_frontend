@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import Barchart from '../components/barchart';
+import BarchartDaily from '../components/barchartDaily.js';
+import BarchartHourly from '../components/barchartHourly.js';
 
 export default function Home() {
 
@@ -7,7 +8,7 @@ export default function Home() {
   const [data, setData] = useState({ Live: 0, Bezug: 0, Abgabe: 0 });
 
   useEffect(() => {
-    var ws = new WebSocket("ws://192.168.178.24:8080/ws")
+    var ws = new WebSocket("ws://localhost:8080/ws")
 
     ws.onopen = () => {
       setConnected(true)
@@ -57,7 +58,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+      {/* Stündliche Anzeige */}
+      <div className="flex flex-col w-11/12 bg-base-100 rounded-xl shadow-lg divide-y-2 p-3">
+        <BarchartHourly />
+      </div>
       {/* Untere Anzeige */}
       <div className="flex flex-col w-11/12 bg-base-100 rounded-xl shadow-lg divide-y-2">
         {/* 1. Element */}
@@ -101,7 +105,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col w-11/12 bg-base-100 rounded-xl shadow-lg divide-y-2 p-3">
-        <Barchart live={Math.round(data.Bezug)} />
+        <BarchartDaily live={Math.round(data.Bezug)} />
       </div>
     </div >
   )

@@ -1,7 +1,7 @@
 import { data } from 'autoprefixer';
 import { useEffect, useState } from 'react'
 
-export default function Barchart(props) {
+export default function BarchartDaily(props) {
 
     const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
     var now = new Date().getDay()
@@ -11,7 +11,16 @@ export default function Barchart(props) {
 
     // runs every time barchart data changes
     useEffect(() => {
-        setMaxValue(Math.max(...barchart))
+        fetch("http://localhost:8080/history/daily", {
+            headers: {
+                Accept: 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                setBarchart(json);
+                setMaxValue(Math.max(...json))
+            })
     }, [])
 
     // runs every time live data changes
@@ -41,8 +50,8 @@ export default function Barchart(props) {
             <div className='flex flex-row w-full justify-evenly'>
                 {[5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (
-                        <div className='flex flex-col-reverse'>
-                            <ProgressBar key={index} height={barchart[value]} index={index} />
+                        <div key={"barchart" + index} className='flex flex-col-reverse'>
+                            <ProgressBar height={barchart[value]} index={index} />
                         </div>
                     )
                 })}
