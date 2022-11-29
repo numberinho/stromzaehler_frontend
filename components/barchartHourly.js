@@ -1,9 +1,12 @@
+import { useState } from "react"
 
 export default function BarchartHourly(props) {
 
     if (props.data === null) {
         return <div>...Loading</div>
     }
+
+    let x = 0
 
     var now = new Date().getHours()
     let maxValue = Math.max(...props.data.Hourly)
@@ -20,12 +23,16 @@ export default function BarchartHourly(props) {
 
     return (
         <div>
-            <div className='flex justify-center text-black/60 text-md'>Tagesübersicht</div>
-            <div className='flex flex-row-reverse w-full justify-evenly'>
+            <div className='flex justify-center text-black/60 text-md mb-1'>Tagesübersicht</div>
+            <div className='flex flex-row-reverse w-full justify-evenly overflow-x-auto'>
                 {[...Array(24).keys()].map((value, index) => {
+                    if (now - index < 0) {
+                        x++
+                        console.log(x)
+                    }
                     return (
                         <div key={"barchartHourly" + index} className='flex flex-col-reverse'>
-                            <ProgressBar height={props.data.Hourly[index]} index={now - index <= 0 ? 24 - index + 1 : now - index} />
+                            <ProgressBar height={props.data.Hourly[index]} index={now - index < 0 ? 24 - x : now - index} />
                         </div>
                     )
                 })}

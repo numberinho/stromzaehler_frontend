@@ -20,8 +20,8 @@ export default function BarchartDaily(props) {
     }
 
     return (
-        <div>
-            <div className='flex justify-center text-black/60 text-md'>Wochenübersicht</div>
+        <div className="">
+            <div className='flex justify-center text-black/60 text-md mb-1'>Wochenübersicht</div>
             <div className='flex flex-row-reverse w-full justify-evenly'>
                 {[7, 6, 5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (
