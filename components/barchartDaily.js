@@ -1,38 +1,13 @@
-import { data } from 'autoprefixer';
-import { useEffect, useState } from 'react'
-
 export default function BarchartDaily(props) {
+
+    if (props.data === null) {
+        return <div>...Loading</div>
+    }
 
     const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
     var now = new Date().getDay()
 
-    const [barchart, setBarchart] = useState([10, 20, 30, 40, 50, 60]);
-    const [maxValue, setMaxValue] = useState(0);
-
-    // runs every time barchart data changes
-    useEffect(() => {
-        fetch("http://localhost:8080/history/daily", {
-            headers: {
-                Accept: 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                setBarchart(json);
-                setMaxValue(Math.max(...json))
-            })
-    }, [])
-
-    // runs every time live data changes
-    useEffect(() => {
-        if (props.live > maxValue) {
-            setMaxValue(props.live)
-        }
-    }, [props.live])
-
-    if (props.live === 0) {
-        return <div>...Loading</div>
-    }
+    let maxValue = Math.max(...props.data.Daily)
 
     const ProgressBar = (props) => {
 
@@ -47,17 +22,14 @@ export default function BarchartDaily(props) {
     return (
         <div>
             <div className='flex justify-center text-black/60 text-md'>Wochenübersicht</div>
-            <div className='flex flex-row w-full justify-evenly'>
-                {[5, 4, 3, 2, 1, 0].map((value, index) => {
+            <div className='flex flex-row-reverse w-full justify-evenly'>
+                {[7, 6, 5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (
                         <div key={"barchart" + index} className='flex flex-col-reverse'>
-                            <ProgressBar height={barchart[value]} index={index} />
+                            <ProgressBar height={props.data.Daily[index]} index={index} />
                         </div>
                     )
                 })}
-                <div className='flex flex-col-reverse'>
-                    <ProgressBar height={props.live} index={0} />
-                </div>
             </div>
         </div>
     )
