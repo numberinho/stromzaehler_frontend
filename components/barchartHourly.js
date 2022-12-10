@@ -5,7 +5,7 @@ export default function BarchartHourly(props) {
     if (props.data === null) {
         return (
             <div className="animate-pulse flex space-x-4 ml-2" >
-                Lade Daten
+                Warte auf Livedaten
             </div >)
     }
 
@@ -40,9 +40,9 @@ export default function BarchartHourly(props) {
                         </div>
                     )
                 })}
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-0.5'></div>
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-1/3'></div>
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-2/3'></div>
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "1px" }}></div>
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "50px" }}></div>
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "100px" }}></div>
             </div>
         </div>
     )

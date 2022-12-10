@@ -9,6 +9,7 @@ export default function Home() {
   const [liveData, setLiveData] = useState({ Live: 0, Bezug: 0, Abgabe: 0 });
   const [hourlyData, setHourlyData] = useState(null);
   const [dailyData, setDailyData] = useState(null);
+  const [weeklyData, setWeeklyData] = useState({ AbgabeThis: 0, BezugThis: 0, AbgabeLast: 0, BezugLast: 0, ChangeAbgabe: 0, ChangeBezug: 0 });
 
   React.useEffect(() => {
     var ws = new WebSocket("ws://192.168.178.24:8080/ws")
@@ -26,6 +27,8 @@ export default function Home() {
         setHourlyData(incoming)
       } else if (incoming.Type == 3) {
         setDailyData(incoming)
+      } else if (incoming.Type == 4) {
+        setWeeklyData(incoming)
       }
     }
 
@@ -89,28 +92,28 @@ export default function Home() {
           {/* Total Bezug */}
           <div className="flex flex-col w-full items-center ">
             <div className="text-md text-black/50">Bezug</div>
-            <div className="font-bold text-3xl">{Math.round(liveData.Bezug)}</div>
+            <div className="font-bold text-3xl">{Math.round(weeklyData.BezugThis)}</div>
             <div className="text-xs text-black/50">kWh</div>
           </div>
           {/* Total Abgabe */}
           <div className="flex flex-col w-full items-center">
             <div className="text-md text-black/50">Bezug</div>
-            <div className="font-bold text-3xl">{Math.round(liveData.Abgabe)}%</div>
-            <div className="text-xs text-black/50">{Math.round(liveData.Abgabe)} kWh</div>
+            <div className="font-bold text-3xl">{Math.round(weeklyData.ChangeBezug)}%</div>
+            <div className="text-xs text-black/50">{Math.round(weeklyData.BezugLast)} kWh</div>
           </div>
         </div>
         <div className="flex flex-row divide-x-2 p-3">
           {/* Total Bezug */}
           <div className="flex flex-col w-full items-center ">
             <div className="text-md text-black/50">Abgabe</div>
-            <div className="font-bold text-3xl">{Math.round(liveData.Bezug)}</div>
+            <div className="font-bold text-3xl">{Math.round(weeklyData.AbgabeThis)}</div>
             <div className="text-xs text-black/50">kWh</div>
           </div>
           {/* Total Abgabe */}
           <div className="flex flex-col w-full items-center">
             <div className="text-md text-black/50">Abgabe</div>
-            <div className="font-bold text-3xl">{Math.round(liveData.Abgabe)}%</div>
-            <div className="text-xs text-black/50">{Math.round(liveData.Abgabe)} kWh</div>
+            <div className="font-bold text-3xl">{Math.round(weeklyData.ChangeAbgabe)}%</div>
+            <div className="text-xs text-black/50">{Math.round(weeklyData.AbgabeLast)} kWh</div>
           </div>
         </div>
       </div>

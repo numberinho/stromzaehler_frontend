@@ -3,7 +3,7 @@ export default function BarchartDaily(props) {
     if (props.data === null) {
         return (
             <div className="animate-pulse flex space-x-4 ml-2" >
-                Lade Daten
+                Warte auf Livedaten
             </div >)
     }
 
@@ -27,9 +27,6 @@ export default function BarchartDaily(props) {
             <div className='flex justify-center text-black/50 text-md font-semibold'>Wochenübersicht</div>
             <div className=' text-black/60 text-xs'>{Math.round(maxValue) + " kWh"}</div>
             <div className='relative flex flex-row-reverse w-full justify-evenly'>
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-0.5'></div>
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-1/3'></div>
-                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs top-2/3'></div>
                 {[7, 6, 5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (
                         <div key={"barchart" + index} className='flex flex-col-reverse'>
@@ -37,6 +34,9 @@ export default function BarchartDaily(props) {
                         </div>
                     )
                 })}
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "1px" }}></div>
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "50px" }}></div>
+                <div className='absolute border-t-2 border-dashed border-black/5 w-full text-xs ' style={{ top: "100px" }}></div>
             </div>
 
         </div>
