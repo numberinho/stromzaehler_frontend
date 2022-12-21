@@ -25,7 +25,7 @@ export default function BarchartDaily(props) {
     return (
         <div className="relative">
             <div className='flex justify-center text-black/50 text-md font-semibold'>Wochenübersicht</div>
-            <div className=' text-black/60 text-xs'>{Math.round(maxValue) + " kWh"}</div>
+            <div className=' text-black/60 text-xs'>{Math.round(maxValue * 100) / 100 + " kWh"}</div>
             <div className='relative flex flex-row-reverse w-full justify-evenly'>
                 {[7, 6, 5, 4, 3, 2, 1, 0].map((value, index) => {
                     return (

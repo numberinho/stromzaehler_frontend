@@ -12,7 +12,7 @@ export default function Home() {
   const [weeklyData, setWeeklyData] = useState({ AbgabeThis: 0, BezugThis: 0, AbgabeLast: 0, BezugLast: 0, ChangeAbgabe: 0, ChangeBezug: 0 });
 
   React.useEffect(() => {
-    var ws = new WebSocket("ws://192.168.178.24:8080/ws")
+    var ws = new WebSocket("ws://192.168.2.127:8080/ws")
 
     ws.onopen = () => {
       setConnected(true)
@@ -60,13 +60,13 @@ export default function Home() {
           {/* Total Bezug */}
           <div className="flex flex-col w-full items-center ">
             <div className="text-md text-black/50">Bezug Gesamt</div>
-            <div className="font-bold text-4xl">{Math.round(liveData.Bezug)}</div>
+            <div className="font-bold text-4xl">{Math.round(liveData.Bezug * 10) / 10}</div>
             <div className="text-xs text-black/50">kWh</div>
           </div>
           {/* Total Abgabe */}
           <div className="flex flex-col w-full items-center">
             <div className="text-md text-black/50">Abgabe Gesamt</div>
-            <div className="font-bold text-4xl">{Math.round(liveData.Abgabe)}</div>
+            <div className="font-bold text-4xl">{Math.round(liveData.Abgabe * 10) / 10}</div>
             <div className="text-xs text-black/50">kWh</div>
           </div>
         </div>

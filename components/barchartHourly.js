@@ -27,7 +27,7 @@ export default function BarchartHourly(props) {
     return (
         <div className="relative">
             <div className='flex justify-center text-black/50 text-md font-semibold'>Tagesübersicht</div>
-            <div className=' text-black/60 text-xs'>{Math.round(maxValue) + " kWh"}</div>
+            <div className=' text-black/60 text-xs'>{Math.round(maxValue * 100) / 100 + " kWh"}</div>
             <div className='relative flex flex-row-reverse w-full justify-evenly'>
                 {[...Array(24).keys()].map((value, index) => {
                     if (now - index < 0) {
